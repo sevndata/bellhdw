@@ -13,6 +13,7 @@ import { Network, networks, Psbt, Signer } from "belcoinjs-lib";
 import { sha256 } from "@noble/hashes/sha256";
 import { crypto as belCrypto } from "belcoinjs-lib";
 import { toXOnly } from "../utils/util";
+import { mnemonicToSeedSync} from "nintondo-bip39";
 
 const ECPair = ECPairFactory(tinysecp);
 
@@ -56,17 +57,36 @@ class HDSimpleKey extends BaseWallet implements Keyring<SerializedSimpleKey> {
 
   private pair?: ECPairInterface;
 
-  constructor(privateKey: Uint8Array ) {
+  constructor(mnemonicOrPrivateKey: string | Uint8Array, password?: string) {
     super();
+    //修改simple的构造方法，兼容传入助记词和种子私钥
+    if (typeof mnemonicOrPrivateKey === 'string') {
+      const seed = mnemonicToSeedSync(mnemonicOrPrivateKey, password);
+      this.privateKey = new Uint8Array(seed);
+    } else {
+      this.privateKey = mnemonicOrPrivateKey;
+    }
+  }
 
-    this.privateKey = privateKey;
+  fromMnemonicSimple(mnemonic: string, password?: string): Uint8Array {
+    const seed = mnemonicToSeedSync(mnemonic, password);
+    return new Uint8Array(seed);
   }
 
   private initPair() {
     if (!this.privateKey)
       throw new Error("Simple Keyring: Invalid privateKey provided");
     if (!this.pair) {
-      this.pair = ECPair.fromPrivateKey(Buffer.from(this.privateKey));
+      let privateKeyBuffer: Buffer;
+      //助记词生成的中是如果是64为转换成32位
+      if (this.privateKey.length === 64) {
+        privateKeyBuffer = Buffer.from(this.privateKey.slice(0, 32));
+      } else if (this.privateKey.length === 32) {
+        privateKeyBuffer = Buffer.from(this.privateKey);
+      } else {
+        throw new Error("Private key must be 32 bytes");
+      }
+      this.pair = ECPair.fromPrivateKey(privateKeyBuffer);
       this.publicKey = this.pair.publicKey;
     }
   }

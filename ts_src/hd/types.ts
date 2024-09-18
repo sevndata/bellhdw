@@ -68,7 +68,7 @@ export type Keyring<State> = {
   addressType?: AddressType;
   hideRoot?: boolean;
   generate?: (seed: Uint8Array, entropy: Uint8Array) => Keyring<State>;
-
+  fromMnemonicSimple(mnemonic: string, password?: string): Uint8Array;
   getAccounts(): Hex[];
   toggleHideRoot?(): void;
   addAccounts?(number: number): string[];

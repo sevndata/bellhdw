@@ -56,7 +56,7 @@ class HDSimpleKey extends BaseWallet implements Keyring<SerializedSimpleKey> {
 
   private pair?: ECPairInterface;
 
-  constructor(privateKey: Uint8Array) {
+  constructor(privateKey: Uint8Array ) {
     super();
 
     this.privateKey = privateKey;

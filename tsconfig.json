@@ -5,12 +5,13 @@
     "outDir": "./src",
     "declaration": true,
     "rootDir": "./ts_src",
-    "types": ["node"],
+    "types": ["node","chai","mocha"],
     "allowJs": false,
     "strict": true,
     "esModuleInterop": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "moduleResolution": "node"
   },
   "include": ["ts_src/**/*.ts"],
   "exclude": ["**/*.spec.ts", "node_modules/**/*"]

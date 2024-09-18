@@ -68,11 +68,6 @@ class HDSimpleKey extends BaseWallet implements Keyring<SerializedSimpleKey> {
     }
   }
 
-  fromMnemonicSimple(mnemonic: string, password?: string): Uint8Array {
-    const seed = mnemonicToSeedSync(mnemonic, password);
-    return new Uint8Array(seed);
-  }
-
   private initPair() {
     if (!this.privateKey)
       throw new Error("Simple Keyring: Invalid privateKey provided");

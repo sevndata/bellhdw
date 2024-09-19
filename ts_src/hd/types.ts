@@ -60,8 +60,8 @@ export enum AddressType {
   P2WPKH,
   P2TR,
   P2SH_P2WPKH,
-  M44_P2WPKH,
-  M44_P2TR,
+  // M44_P2WPKH,
+  // M44_P2TR,
 }
 
 export type Keyring<State> = {

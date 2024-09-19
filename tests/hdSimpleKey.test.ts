@@ -38,10 +38,12 @@ describe('Keyring', () => {
 
     beforeEach(() => {
         try {
-            const mnemonic: string = 'tone point gap void pause junk bundle wire chunk very sauce grocery';
+            // const mnemonic: string = 'tone point gap void pause junk bundle wire chunk very sauce grocery';
+            // const mnemonic: string = 'word remember service soldier time mass enable deny garment very unveil crouch';
+            const mnemonic: string = 'robust lawn pelican alarm either divert exotic action rhythm fresh there scrub';
             const pwdStr: string = '';
 
-            keyring = new HDSimpleKey(mnemonic, pwdStr);
+            keyring = new HDSimpleKey(mnemonic,pwdStr);
             // 是否隐藏根
             keyring.hideRoot = false;
         } catch (error) {

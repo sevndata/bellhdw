@@ -1,6 +1,6 @@
-import { Network, networks, payments } from "belcoinjs-lib";
-import { AddressType } from "./types";
-import { toXOnly } from "../utils/util";
+import {Network, networks, payments} from "belcoinjs-lib";
+import {AddressType} from "./types";
+import {toXOnly} from "../utils/util";
 
 export class BaseWallet {
   addressType?: AddressType;
@@ -36,6 +36,16 @@ export class BaseWallet {
           internalPubkey: toXOnly(Buffer.from(publicKey)),
           network: this.network ?? networks.bellcoin,
         }).address;
+      // case AddressType.M44_P2TR:
+      //   return payments.({
+      //     internalPubkey: toXOnly(Buffer.from(publicKey)),
+      //     network: this.network ?? networks.bellcoin,
+      //   }).address;
+      // case AddressType.M44_P2WPKH:
+      //   return payments.p2tr({
+      //     internalPubkey: toXOnly(Buffer.from(publicKey)),
+      //     network: this.network ?? networks.bellcoin,
+      //   }).address;
       default:
         throw new Error("Invalid AddressType");
     }
